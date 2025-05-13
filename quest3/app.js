@@ -19,8 +19,6 @@ app.get('/dias', async (req, res) => {
   try {
     const dados = await carregarDados();
     res.send(dados);
-    console.log(dados);
-
     
     const diasComFaturamento = dados.filter(dia => dia.valor > 0);
 
@@ -40,23 +38,6 @@ app.get('/dias', async (req, res) => {
 
   } catch (err) {
     res.status(500).json({ erro: "Erro ao ler o arquivo JSON" });
-  }
-});
-
-app.get('/dias/:dia', async (req, res) => {
-    try {
-    const dia = parseInt(req.params.dia);
-    const dados = await carregarDados();
-    
-    const resultado = dados.find(item => item.dia === dia);
-
-    if (resultado) {
-      res.send(`Dia ${resultado.dia}: Valor Acumulado: R$ ${resultado.valor}`);
-    } else {
-      res.status(404).json({ erro: "Dia não encontrado" });
-    }
-  } catch (err) {
-    res.status(500).json({ erro: "Erro ao processar a requisição" });
   }
 });
 
